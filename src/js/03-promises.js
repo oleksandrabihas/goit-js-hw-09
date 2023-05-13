@@ -24,19 +24,23 @@ function onPromiseCreate(e) {
   let delay = +inputDelay.value;
   let step = +inputStep.value;
   let amount = +inputAmount.value;
-
-  for (let i = 1; i <= amount; i += 1) {
-    createPromise(i, delay)
-      .then(({ position, delay }) => {
-        Notiflix.Notify.success(
-          `✅ Fulfilled promise ${position} in ${delay}ms`
-        );
-      })
-      .catch(({ position, delay }) => {
-        Notiflix.Notify.failure(
-          `❌ Rejected promise ${position} in ${delay}ms`
-        );
-      });
-    delay += step;
+  if (delay < 0 || step < 0 || amount <= 0) {
+    Notiflix.Notify.failure('Entered values should be positive.');
+    return;
+  } else {
+    for (let i = 1; i <= amount; i += 1) {
+      createPromise(i, delay)
+        .then(({ position, delay }) => {
+          Notiflix.Notify.success(
+            `✅ Fulfilled promise ${position} in ${delay}ms`
+          );
+        })
+        .catch(({ position, delay }) => {
+          Notiflix.Notify.failure(
+            `❌ Rejected promise ${position} in ${delay}ms`
+          );
+        });
+      delay += step;
+    }
   }
 }

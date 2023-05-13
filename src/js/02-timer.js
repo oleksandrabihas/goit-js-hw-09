@@ -37,17 +37,17 @@ flatpickr(datetimePicker, options);
 button.addEventListener('click', onClickStartTimer)
 
 function onClickStartTimer() {
+    datetimePicker.disabled = true;
     const inrervalId = setInterval(() => {
       if (selectedDate - currentDate >= 1000) {
-          button.disabled = true;
-          datetimePicker.disabled = true;
+        button.disabled = true;
         currentDate += 1000;
         leftTime = Math.floor(selectedDate - currentDate);
         convertMs(leftTime);
       } else {
           clearInterval(inrervalId);
-          button.disabled = true;
           datetimePicker.disabled = false;
+          button.disabled = false;
       }
     }, 1000);
 }
